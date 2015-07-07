@@ -1,0 +1,2 @@
+*.jar filter=fat -text
+*.war filter=fat -text
