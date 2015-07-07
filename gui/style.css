@@ -1,0 +1,25 @@
+.error {
+   margin: 20px;
+   overflow-x: scroll;
+   font-family: monospace;
+   white-space: pre;
+}
+
+#total, #query-result, #query-error, #hide-explorer {
+	display: none;
+}
+
+.error-line {
+   background: red;
+}
+
+.error-character {
+   background: green;
+}
+
+#query-result pre {
+  display: inline;
+  font-family: serif;
+  border: none;
+  background-color: inherit;
+}
