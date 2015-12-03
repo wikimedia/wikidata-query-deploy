@@ -1,45 +1,70 @@
 .error {
-   margin: 20px;
-   overflow-x: scroll;
-   font-family: monospace;
-   white-space: pre;
+	margin: 20px;
+	overflow-x: scroll;
+	font-family: monospace;
+	white-space: pre;
 }
 
-#total, #query-result,  #hide-explorer {
-   display: none;
+#total,
+#query-result,
+#hide-explorer {
+	display: none;
 }
+
 #query-error {
-   display: none;
+	display: none;
 }
 
 .error-line {
-   background: red;
+	border-bottom: 2px dotted red;
 }
 
 .error-character {
-   background: green;
+	background: green;
 }
 
 #query-result pre {
-  display: inline;
-  font-family: serif;
-  border: none;
-  background-color: inherit;
+	display: inline;
+	font-family: serif;
+	border: none;
+	background-color: inherit;
 }
 
 .cm-s-default .cm-bracket {
-  color: #000;
+	color: #000;
 }
 
 .CodeMirror {
-  border: 1px solid #ccc;
-  height: auto!important;
+	border: 1px solid #ccc;
+	height: auto !important;
 }
 
 .CodeMirror-scroll {
-  min-height: 300px; 
+	min-height: 300px;
 }
 
-.exampleQueries{
-	width:160px;
+.exampleQueries {
+	width: 160px;
+}
+
+.navbar, .alert {
+	margin-bottom: 0;
+}
+
+.navbar-right {
+	margin-right: 0;
+}
+
+.label {
+	font-size: 100%;
+}
+
+.actionMessage {
+	display: none;
+}
+
+iframe.shortUrl {
+	border: none;
+	width: 250px;
+	height: 40px;
 }
