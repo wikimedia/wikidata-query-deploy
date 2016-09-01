@@ -2,6 +2,7 @@ checks:
   create_symlink_jnl:
     type: command
     stage: promote
+    group: canary, default
     command: ln -sf /var/lib/wdqs/wikidata.jnl /srv/deployment/wdqs/wdqs/wikidata.jnl
   create_symlink_rules:
     type: command

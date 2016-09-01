@@ -1,0 +1,4 @@
+---
+/srv/deployment/wdqs/wdqs/RWStore.properties:
+  template: RWStore.properties.j2
+  remote_vars: /etc/wdqs/vars.yaml
