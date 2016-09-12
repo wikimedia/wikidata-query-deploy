@@ -1,14 +1,4 @@
 checks:
-  create_symlink_jnl_1:
-    type: command
-    stage: promote
-    group: canary
-    command: ln -sf /var/lib/wdqs/wikidata.jnl /srv/deployment/wdqs/wdqs/wikidata.jnl
-  create_symlink_jnl_2:
-    type: command
-    stage: promote
-    group: default
-    command: ln -sf /var/lib/wdqs/wikidata.jnl /srv/deployment/wdqs/wdqs/wikidata.jnl
   create_symlink_rules:
     type: command
     stage: promote
