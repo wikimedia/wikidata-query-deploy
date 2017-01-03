@@ -2,7 +2,3 @@
 /etc/wdqs/RWStore.properties:
   template: RWStore.properties.j2
   remote_vars: /etc/wdqs/vars.yaml
-
-ldf-config.json:
-  template: ldf-config.json.j2
-  remote_vars: /etc/wdqs/vars.yaml
