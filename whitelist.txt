@@ -1,0 +1,2 @@
+http://sparql.europeana.eu/
+http://nomisma.org/query
