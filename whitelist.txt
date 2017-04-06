@@ -3,3 +3,15 @@ http://nomisma.org/query
 http://data.cervantesvirtual.com/openrdf-sesame/repositories/data
 http://datos.bne.es/sparql
 http://edan.si.edu/saam/sparql
+http://data.bnf.fr/sparql
+http://dbpedia.org/sparql
+http://rdf.insee.fr/sparql
+http://sparql.wikipathways.org/
+http://dati.camera.it/sparql
+http://dati.emilia-romagna.it/sparql
+http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql
+http://statistics.data.gov.uk/sparql
+http://opendatacommunities.org/sparql
+http://data.plan4all.eu/sparql
+http://vocab.getty.edu/sparql.json
+http://linkeddata.uriburner.com/sparql
