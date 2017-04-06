@@ -2,3 +2,4 @@ http://sparql.europeana.eu/
 http://nomisma.org/query
 http://data.cervantesvirtual.com/openrdf-sesame/repositories/data
 http://datos.bne.es/sparql
+http://edan.si.edu/saam/sparql
