@@ -15,4 +15,4 @@ http://opendatacommunities.org/sparql
 http://data.plan4all.eu/sparql
 http://vocab.getty.edu/sparql.json
 http://linkeddata.uriburner.com/sparql
-http://tools.wmflabs.org/mw2sparql/enwiki/sparql
+http://tools.wmflabs.org/mw2sparql/sparql
