@@ -102,6 +102,6 @@
 		}
 	}
 },
-"endpoints": [".wikipedia.org", "commons.wikimedia.org", "www.mediawiki.org", "www.wikidata.org", "test.wikidata.org"]
+"endpoints": [".wikipedia.org", "commons.wikimedia.org", "www.mediawiki.org", "www.wikidata.org", "test.wikidata.org", ".wikisource.org"]
 }
 
