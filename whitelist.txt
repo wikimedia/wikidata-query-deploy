@@ -25,3 +25,8 @@ https://linkeddata1.calcul.u-psud.fr/sparql
 http://sparql.hegroup.org/sparql/
 http://lov.okfn.org/dataset/lov/sparql
 http://opencitations.net/sparql
+http://dati.beniculturali.it/sparql
+http://zbw.eu/beta/sparql/stw/query
+http://zbw.eu/beta/sparql/gnd/query
+http://zbw.eu/beta/sparql/econ_pers/query
+http://zbw.eu/beta/sparql/econ_corp/query
