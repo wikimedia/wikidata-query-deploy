@@ -30,3 +30,4 @@ http://zbw.eu/beta/sparql/stw/query
 http://zbw.eu/beta/sparql/gnd/query
 http://zbw.eu/beta/sparql/econ_pers/query
 http://zbw.eu/beta/sparql/econ_corp/query
+http://id.nlm.nih.gov/mesh/sparql
