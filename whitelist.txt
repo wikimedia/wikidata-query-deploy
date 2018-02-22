@@ -1,5 +1,7 @@
 https://query.wikidata.org/bigdata/namespace/categories/sparql
 https://query.wikidata.org/bigdata/namespace/dcatap/sparql
+https://query.wikidata.org/bigdata/namespace/wdq/sparql
+https://query.wikidata.org/sparql
 http://sparql.europeana.eu/
 http://nomisma.org/query
 http://data.cervantesvirtual.com/openrdf-sesame/repositories/data
