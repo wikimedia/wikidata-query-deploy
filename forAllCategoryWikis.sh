@@ -1,5 +1,5 @@
 #!/bin/bash
-DUMP_LIST=${DUMP_LIST:-"https://noc.wikimedia.org/conf/categories-rdf.dblist"}
+DUMP_LIST=${DUMP_LIST:-"https://noc.wikimedia.org/conf/dblists/categories-rdf.dblist"}
 DIR=${DIR:-`dirname $0`}
 COMMAND="$1"
 
