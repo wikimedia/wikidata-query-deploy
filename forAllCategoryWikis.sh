@@ -6,11 +6,11 @@ COMMAND="$1"
 if [ -f $DUMP_LIST ]; then
 	fetch="cat"
 else
-	fetch="curl -s -XGET"
+	fetch="curl -s -f -XGET"
 fi
 
 shift
 $fetch $DUMP_LIST | while read wiki; do
 	echo "Processing $wiki..."
 	$DIR/$COMMAND $wiki "$@"
-done 
+done
