@@ -36,3 +36,4 @@ http://lod.opentransportdata.swiss/query
 http://data.bibliotheken.nl/sparql
 https://data.pdok.nl/sparql
 http://collection.britishart.yale.edu/openrdf-sesame/repositories/ycba
+http://bnb.data.bl.uk/sparql
