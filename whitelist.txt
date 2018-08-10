@@ -39,3 +39,7 @@ http://collection.britishart.yale.edu/openrdf-sesame/repositories/ycba
 http://bnb.data.bl.uk/sparql
 https://dati.quirinale.it/sparql
 http://sparql.uniprot.org/sparql
+https://sparql.uniprot.org/sparql
+https://ld.stadt-zuerich.ch/query
+http://data.nobelprize.org/sparql
+http://zbw.eu/beta/sparql/pm20/query
