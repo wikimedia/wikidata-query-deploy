@@ -35,5 +35,5 @@ curl -s -f -XGET "$URL" -o "$DATA_DIR/$FILENAME"
 if [ ! -s $DATA_DIR/$FILENAME ]; then
 	echo "Could not download $URL"
 	exit 1
-fi	
+fi
 gunzip -dc $DATA_DIR/$FILENAME | curl -XPOST -H 'Content-type:application/sparql-update' --data-binary @- $HOST/$CONTEXT/namespace/$NAMESPACE/sparql
