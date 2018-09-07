@@ -43,3 +43,4 @@ https://sparql.uniprot.org/sparql
 https://ld.stadt-zuerich.ch/query
 http://data.nobelprize.org/sparql
 http://zbw.eu/beta/sparql/pm20/query
+http://libris.kb.se/sparql
