@@ -12,7 +12,7 @@ HEAP_SIZE=${HEAP_SIZE:-"16g"}
 LOG_CONFIG=${LOG_CONFIG:-""}
 LOG_DIR=${LOG_DIR:-"/var/log/wdqs"}
 MEMORY=${MEMORY:-"-Xmx${HEAP_SIZE}"}
-GC_LOGS=${GC_LOGS:-"-Xloggc:${LOG_DIR}/wdqs-blazegraph_jvm_gc.%p.log \
+GC_LOGS=${GC_LOGS:-"-Xloggc:${LOG_DIR}/wdqs-blazegraph_jvm_gc.%p-%t.log \
          -XX:+PrintGCDetails \
          -XX:+PrintGCDateStamps \
          -XX:+PrintGCTimeStamps \
@@ -21,6 +21,9 @@ GC_LOGS=${GC_LOGS:-"-Xloggc:${LOG_DIR}/wdqs-blazegraph_jvm_gc.%p.log \
          -XX:+PrintGCCause \
          -XX:+PrintGCApplicationStoppedTime \
          -XX:+PrintTenuringDistribution \
+         -XX:+UnlockExperimentalVMOptions \
+         -XX:G1NewSizePercent=20 \
+         -XX:+ParallelRefProcEnabled \
          -XX:+UseGCLogFileRotation \
          -XX:NumberOfGCLogFiles=10 \
          -XX:GCLogFileSize=20M"}
@@ -32,11 +35,11 @@ DEBUG=-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=n
 DEBUG=
 
 function usage() {
-  echo "Usage: $0 [-h <host>] [-d <dir>] [-c <context>] [-p <port>] [-o <blazegraph options>] [-f config.properties]"
+  echo "Usage: $0 [-h <host>] [-d <dir>] [-c <context>] [-p <port>] [-o <blazegraph options>] [-f config.properties] [-S logging_suffix] [-v]"
   exit 1
 }
 
-while getopts h:c:p:d:o:f:? option
+while getopts h:c:p:d:o:f:S:v? option
 do
   case "${option}"
   in
@@ -46,6 +49,8 @@ do
     d) DIR=${OPTARG};;
     o) BLAZEGRAPH_OPTS="${OPTARG}";;
     f) CONFIG_FILE=${OPTARG};;
+    S) PROGRAM_NAME_SUFFIX=${OPTARG};;
+ 	v) VERBOSE_LOGGING="true";;
     ?) usage;;
   esac
 done
