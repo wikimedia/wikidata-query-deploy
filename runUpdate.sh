@@ -87,5 +87,4 @@ SPARQL_URL=$HOST/$CONTEXT/namespace/$NAMESPACE/sparql
 echo "Updating via $SPARQL_URL"
 exec java -cp ${CP} ${MEMORY} ${GC_LOGS} ${LOG_OPTIONS} ${EXTRA_JVM_OPTS} \
      ${TIMEOUT_ARG} ${UPDATER_OPTS} \
-     -Dorg.wikidata.query.rdf.tool.change.KafkaPoller.reportingTopic=eqiad.mediawiki.revision-create \
      ${MAIN} ${ARGS} --sparqlUrl ${SPARQL_URL} "$@"
