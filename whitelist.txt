@@ -47,3 +47,4 @@ http://libris.kb.se/sparql
 https://api.parliament.uk/sparql
 https://data.istex.fr/sparql/
 https://data.epo.org/linked-data/query
+https://data.niod.nl/PoolParty/sparql/WO2_Thesaurus
