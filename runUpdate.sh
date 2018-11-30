@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if [ -r /etc/default/wdqs-updater ]; then
   . /etc/default/wdqs-updater
@@ -6,7 +7,8 @@ fi
 
 HOST=http://localhost:9999
 CONTEXT=bigdata
-MEMORY="-Xmx2g"
+HEAP_SIZE=${HEAP_SIZE:-"2g"}
+MEMORY=${MEMORY:-"-Xmx${HEAP_SIZE}"}
 LOG_DIR=${LOG_DIR:-"/var/log/wdqs"}
 GC_LOGS=${GC_LOGS:-"-Xloggc:${LOG_DIR}/wdqs-updater_jvm_gc.%p.log \
          -XX:+PrintGCDetails \
