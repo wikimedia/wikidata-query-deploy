@@ -52,6 +52,6 @@ https://www.ebi.ac.uk/rdf/services/sparql
 https://integbio.jp/rdf/ddbj/sparql
 http://integbio.jp/rdf/kero/sparql
 https://integbio.jp/rdf/sparql
-http://sciencesource-query.wmflabs.org/
 https://data.idref.fr/sparql
 https://sophox.org/sparql
+http://sciencesource-query.wmflabs.org/proxy/wdqs/bigdata/namespace/wdq/sparql
