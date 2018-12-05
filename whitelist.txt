@@ -50,7 +50,7 @@ https://data.epo.org/linked-data/query
 https://data.niod.nl/PoolParty/sparql/WO2_Thesaurus
 https://www.ebi.ac.uk/rdf/services/sparql
 https://integbio.jp/rdf/ddbj/sparql
-http://integbio.jp/rdf/kero/sparql
+https://integbio.jp/rdf/kero/sparql
 https://integbio.jp/rdf/sparql
 https://data.idref.fr/sparql
 https://sophox.org/sparql
