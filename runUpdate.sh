@@ -7,7 +7,7 @@ fi
 
 HOST=http://localhost:9999
 CONTEXT=bigdata
-HEAP_SIZE=${HEAP_SIZE:-"2g"}
+HEAP_SIZE=${HEAP_SIZE:-"3g"}
 MEMORY=${MEMORY:-"-Xmx${HEAP_SIZE}"}
 LOG_DIR=${LOG_DIR:-"/var/log/wdqs"}
 GC_LOGS=${GC_LOGS:-"-Xloggc:${LOG_DIR}/wdqs-updater_jvm_gc.%p.log \
@@ -89,5 +89,4 @@ SPARQL_URL=$HOST/$CONTEXT/namespace/$NAMESPACE/sparql
 echo "Updating via $SPARQL_URL"
 exec java -cp ${CP} ${MEMORY} ${GC_LOGS} ${LOG_OPTIONS} ${EXTRA_JVM_OPTS} \
      ${TIMEOUT_ARG} ${UPDATER_OPTS} \
-     -Dorg.wikidata.query.rdf.tool.change.KafkaPoller.reportingTopic=eqiad.mediawiki.revision-create \
      ${MAIN} ${ARGS} --sparqlUrl ${SPARQL_URL} "$@"
