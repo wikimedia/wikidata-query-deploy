@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+set -e
 
-if [ -r /etc/default/wdqs-blazegraph ]; then
-  . /etc/default/wdqs-blazegraph
+BLAZEGRAPH_CONFIG=${BLAZEGRAPH_CONFIG:-"/etc/default/wdqs-blazegraph"}
+if [ -r $BLAZEGRAPH_CONFIG ]; then
+  . $BLAZEGRAPH_CONFIG
 fi
 
 HOST=${HOST:-"localhost"}
@@ -56,9 +58,9 @@ done
 pushd $DIR
 
 # Q-id of the default globe
-DEFAULT_GLOBE=2
+DEFAULT_GLOBE=${DEFAULT_GLOBE:-"2"}
 # Blazegraph HTTP User Agent for federation
-USER_AGENT="Wikidata Query Service; https://query.wikidata.org/";
+USER_AGENT=${USER_AGENT:-"Wikidata Query Service; https://query.wikidata.org/"}
 
 LOG_OPTIONS=""
 if [ ! -z "$LOG_CONFIG" ]; then
@@ -79,7 +81,6 @@ exec java \
      -Dorg.wikidata.query.rdf.blazegraph.mwapi.MWApiServiceFactory.config=$DIR/mwservices.json \
      -Dcom.bigdata.rdf.sail.webapp.client.HttpClientConfigurator=org.wikidata.query.rdf.blazegraph.ProxiedHttpConnectionFactory \
      -Dhttp.userAgent="${USER_AGENT}" \
-     -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF \
      ${BLAZEGRAPH_OPTS} \
      -jar jetty-runner*.jar \
      --host $HOST \
