@@ -8,6 +8,9 @@ if [ -r /etc/wdqs/gui_vars.sh ]; then
   . /etc/wdqs/gui_vars.sh
 fi
 
+if [ ! -z "$ALIAS_OVERRIDE" ]; then
+	ALIAS_FILE=$ALIAS_OVERRIDE
+fi
 SOURCE=${SOURCE:-"https://dumps.wikimedia.org/other/categoriesrdf/daily"}
 DATA_DIR=${DATA_DIR:-"/srv/wdqs"}
 HOST=${CATEGORY_ENDPOINT:-"http://localhost:9999"}
