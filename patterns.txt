@@ -1,3 +1,4 @@
 \?obj wdt:P345 \?imdb_id \. FILTER \(\?imdb_id='[a-z]+\d+'\) \?article schema:about \?obj
 SELECT \?personLabel \?role \?imdb WHERE.+values\(\?p \?ps \?role\)
 SELECT \?subject \?subjectLabel \?predicateLabel \?object \?objectLabel \?qualifierLabel \?qualifierObject \?qualifierObjectLabel
+One or more Optionals matches
