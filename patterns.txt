@@ -2,3 +2,4 @@
 SELECT \?personLabel \?role \?imdb WHERE.+values\(\?p \?ps \?role\)
 SELECT \?subject \?subjectLabel \?predicateLabel \?object \?objectLabel \?qualifierLabel \?qualifierObject \?qualifierObjectLabel
 One or more Optionals matches
+SELECT DISTINCT \?airport \?airportLabel \?place \?placeLabel \?IATA_code
