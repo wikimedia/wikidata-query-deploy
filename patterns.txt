@@ -4,3 +4,4 @@ SELECT \?subject \?subjectLabel \?predicateLabel \?object \?objectLabel \?qualif
 One or more Optionals matches
 SELECT DISTINCT \?airport \?airportLabel \?place \?placeLabel \?IATA_code
 SELECT \?item \(\?itemLabel as \?title\) +\?imdb \?article \?twitter \?facebook \?eidr \?tmdb \?instanceofLabel \?season_numberLabel \?episode_numberLabel
+SELECT \?item \(\?itemLabel as \?title) \?imdb \?article \?instanceofLabel
