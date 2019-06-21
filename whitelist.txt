@@ -60,3 +60,5 @@ https://data.niod.nl/PoolParty/sparql/WO2_biografieen
 http://data.muziekschatten.nl/sparql
 https://jpsearch.go.jp/rdf/sparql/
 https://slod.fiz-karlsruhe.de/sparql
+http://dbpedia.org/sparql*
+https://wdhqs.wmflabs.org/sparql
