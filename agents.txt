@@ -1,4 +1,4 @@
-^Xpython-requests/\d+\.\d+\.\d+$
+^python-requests/\d+\.\d+\.\d+$
 ^sparqlwrapper \d+\.\d+\.\d+ \(rdflib\.github\.io/sparqlwrapper\)$
 ^Python-urllib/\d+\.\d+$
 ^Java/[0-9._]+$
