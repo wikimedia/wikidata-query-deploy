@@ -63,3 +63,4 @@ https://slod.fiz-karlsruhe.de/sparql
 http://dbpedia.org/sparql*
 https://wdhqs.wmflabs.org/sparql
 http://dati.isprambiente.it/sparql
+https://linkeddata.cultureelerfgoed.nl/sparql
