@@ -64,3 +64,6 @@ http://dbpedia.org/sparql*
 https://wdhqs.wmflabs.org/sparql
 http://dati.isprambiente.it/sparql
 https://linkeddata.cultureelerfgoed.nl/sparql
+https://tora.entryscape.net/store/sparql
+http://de.dbpedia.org/sparql*
+
