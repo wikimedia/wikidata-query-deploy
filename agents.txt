@@ -1,7 +1,9 @@
 ^python-requests/\d+\.\d+\.\d+$
-^sparqlwrapper \d+\.\d+\.\d+ \(rdflib\.github\.io/sparqlwrapper\)$
+^sparqlwrapper \d+\.\d+\.\d+(dev\d+)? \(rdflib\.github\.io/sparqlwrapper\)$
 ^Python-urllib/\d+\.\d+$
 ^Java/[0-9._]+$
 ^GuzzleHttp/\d+\.\d+\.\d+\s+curl/\d+\.\d+\.\d+\s+PHP/[\w.+-]+$
 ^Ruby$
 ^rest-client/\d+\.\d+\.\d+\s+\(.*?\)\s+ruby/\d+\.\d+\.\w+$
+^WordPress/\d+\.\d+-alpha-\d+; https://browsehappy\.com$
+^node-fetch/\d+.\d+ \(\+https://github.com/bitinn/node-fetch\)$
