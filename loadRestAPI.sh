@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 HOST=http://localhost:9999
 CONTEXT=bigdata
@@ -9,7 +10,7 @@ pushd `dirname $0` > /dev/null
 SCRIPTPATH=`pwd`
 popd > /dev/null
 
-export NSS_DATALOAD_PROPERTIES="$SCRIPTPATH/RWStore.properties"
+export NSS_DATALOAD_PROPERTIES="${NSS_DATALOAD_PROPERTIES:-${SCRIPTPATH}/RWStore.properties}"
 
 while getopts h:c:n:d: option
 do
@@ -51,7 +52,7 @@ EOT
 echo "Loading with properties..."
 cat $LOAD_PROP_FILE
 
-curl -X POST --data-binary @${LOAD_PROP_FILE} --header 'Content-Type:text/plain' $HOST/$CONTEXT/dataloader
+curl -X POST --data-binary @${LOAD_PROP_FILE} --header 'Content-Type:text/plain' --silent --show-error $HOST/$CONTEXT/dataloader
 #Let the output go to STDOUT/ERR to allow script redirection
 
 rm -f $LOAD_PROP_FILE
