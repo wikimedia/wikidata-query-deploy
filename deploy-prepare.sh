@@ -15,9 +15,9 @@ echo "bail if there are uncommitted changes"
 git diff --exit-code --quiet
 git diff --cached --exit-code --quiet
 
-echo "remove all files except dotfiles, this script, README and scap directory"
+echo "remove all files except dotfiles, this script, README, scap directory and files required for deployment"
 shopt -s extglob
-rm -rv !(.git*|scap|deploy-prepare.sh|README)
+rm -rv !(.git*|scap|deploy-prepare.sh|README|agents.txt|gui|patterns.txt|RWStore.categories.properties|whitelist.txt)
 shopt -u extglob
 
 echo "downloading latest tar file"
