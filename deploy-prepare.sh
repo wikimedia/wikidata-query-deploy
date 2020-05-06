@@ -21,8 +21,8 @@ rm -rv !(.git*|scap|deploy-prepare.sh|README)
 shopt -u extglob
 
 echo "downloading latest tar file"
-curl -o service-${CURRENT_VERSION_NUMBER}-dist.tar.gz\
- https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/service/${CURRENT_VERSION_NUMBER}/service-${CURRENT_VERSION_NUMBER}-tar.gz
+curl -o service-${CURRENT_VERSION_NUMBER}-dist.tar.gz --fail \
+ https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/service/${CURRENT_VERSION_NUMBER}/service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 
 echo "extracting into current directory"
 tar --strip-components=1 -xvf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
