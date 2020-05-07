@@ -30,6 +30,10 @@ tar --strip-components=1 -xvf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 echo "removing tar file"
 rm -rf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 
+echo "updating gui deploy submodule"
+git submodule init
+git submodule update --remote gui
+
 echo "creating commit"
 git add .
 git commit -m "deploy version ${CURRENT_VERSION_NUMBER}"
