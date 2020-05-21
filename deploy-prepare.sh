@@ -11,6 +11,9 @@ trap 'err_report $LINENO' ERR
 
 CURRENT_VERSION_NUMBER=${1?Need the current version number in format x.y.z}
 
+echo "ensure git fat is activated"
+git fat init
+
 echo "bail if there are uncommitted changes"
 git diff --exit-code --quiet
 git diff --cached --exit-code --quiet
