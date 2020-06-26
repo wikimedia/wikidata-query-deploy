@@ -19,7 +19,7 @@ http://opendatacommunities.org/sparql
 http://data.plan4all.eu/sparql
 http://vocab.getty.edu/sparql.json
 http://linkeddata.uriburner.com/sparql
-http://tools.wmflabs.org/mw2sparql/sparql
+http://mw2sparql.toolforge.org/sparql
 http://linkedgeodata.org/sparql
 http://sparql.hegroup.org/sparql/
 http://lov.okfn.org/dataset/lov/sparql
