@@ -7,3 +7,7 @@ checks:
     type: command
     stage: promote
     command: ln -snf /etc/wdqs/ldf-config.json /srv/deployment/wdqs/wdqs/ldf-config.json
+  create_symlink_gui_config:
+    type: command
+    stage: promote
+    command: ln -snf /etc/wdqs/gui-config.json /srv/deployment/wdqs/wdqs/gui/custom-config.json
