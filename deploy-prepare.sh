@@ -20,7 +20,7 @@ git diff --cached --exit-code --quiet
 
 echo "remove all files except dotfiles, this script, README, scap directory and files required for deployment"
 shopt -s extglob
-rm -rv !(.git*|scap|deploy-prepare.sh|README|agents.txt|gui|patterns.txt|RWStore.categories.properties|whitelist.txt)
+rm -rv !(.git*|scap|deploy-prepare.sh|README|agents.txt|patterns.txt|RWStore.categories.properties|whitelist.txt)
 shopt -u extglob
 
 echo "downloading latest tar file"
@@ -32,10 +32,6 @@ tar --strip-components=1 -xvf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 
 echo "removing tar file"
 rm -rf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
-
-echo "updating gui deploy submodule"
-git submodule init
-git submodule update --remote gui
 
 echo "creating commit"
 git add .
