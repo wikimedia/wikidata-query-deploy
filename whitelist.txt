@@ -68,3 +68,4 @@ https://linkeddata.cultureelerfgoed.nl/sparql
 https://tora.entryscape.net/store/sparql
 http://de.dbpedia.org/sparql*
 https://api.data.pldn.nl/datasets/cbs/wijken-buurten/services/wijken-buurten/sparql
+https://idsm.elixir-czech.cz/sparql/endpoint/wikidata
