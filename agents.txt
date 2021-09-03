@@ -7,3 +7,4 @@
 ^rest-client/\d+\.\d+\.\d+\s+\(.*?\)\s+ruby/\d+\.\d+\.\w+$
 ^WordPress/\d+\.\d+-alpha-\d+; https://browsehappy\.com$
 ^node-fetch/\d+.\d+ \(\+https://github.com/bitinn/node-fetch\)$
+^Apache-Jena-ARQ/3\.7\.0$
