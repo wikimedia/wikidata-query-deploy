@@ -2,8 +2,8 @@ checks:
   create_symlink_rules:
     type: command
     stage: promote
-    command: ln -sf /var/log/wdqs/rules.log /srv/deployment/wdqs/wdqs/rules.log
+    command: ln -sf /var/log/query_service/rules.log /srv/deployment/wdqs/wdqs/rules.log
   create_symlink_ldf:
     type: command
     stage: promote
-    command: ln -snf /etc/wdqs/ldf-config.json /srv/deployment/wdqs/wdqs/ldf-config.json
+    command: ln -snf /etc/query_service/ldf-config.json /srv/deployment/wdqs/wdqs/ldf-config.json
