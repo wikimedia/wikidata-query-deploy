@@ -31,7 +31,7 @@
 #       deploy \
 #       --jar lib/streaming-updater-producer-0.3.77-jar-with-dependencies.jar \
 #       --options-file flink/rdf-streaming-updater.yaml \
-#       --savepoint checkpoints/4b6ab3633baac70fd899f56f8d5797b2/chk-86950
+#       --initial-state checkpoints/4b6ab3633baac70fd899f56f8d5797b2/chk-86950
 #
 # Upgrade the job to version 0.3.77 in codfw using savepoints as the base directory for storing the intermediate
 # savepoint:
@@ -63,6 +63,7 @@ import logging
 import re
 import socket
 import sys
+import zipfile
 from datetime import datetime
 from os import environ
 from os.path import basename
@@ -110,7 +111,7 @@ OPTIONS_PER_ENV = {
         'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater_test',
         'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "checkpoints"),
         'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation-staging',
-        'SIDE_OUTPUT_DOMAIN': 'staging.wikidata.org',
+        'HOSTNAME': 'test.wikidata.org',
         'PARALLELISM': 4,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
@@ -122,7 +123,7 @@ OPTIONS_PER_ENV = {
         'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
         'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "checkpoints"),
         'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation',
-        'SIDE_OUTPUT_DOMAIN': 'www.wikidata.org',
+        'HOSTNAME': 'www.wikidata.org',
         'PARALLELISM': 12,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
@@ -134,7 +135,7 @@ OPTIONS_PER_ENV = {
         'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
         'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "checkpoints"),
         'OUTPUT_TOPIC': 'codfw.rdf-streaming-updater.mutation',
-        'SIDE_OUTPUT_DOMAIN': 'www.wikidata.org',
+        'HOSTNAME': 'www.wikidata.org',
         'PARALLELISM': 12,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
@@ -395,6 +396,14 @@ class InsecureRequestWarningFilter(logging.Filter):
                    "is strongly" not in record.getMessage()
 
 
+def check_jar(jar_file: str) -> str:
+    """Make sure the jar file is valid before sending any commands to the flink cluster"""
+    with zipfile.ZipFile(jar_file, "r") as zip:
+        if zip.testzip() is not None:
+            raise ValueError(f"{jar_file} is not valid")
+    return jar_file
+
+
 def main():
     logging.basicConfig(level=logging.INFO,
                         format='%(levelname)5.5s %(asctime)s [%(name)7.7s] %(message)s',
@@ -411,13 +420,13 @@ def main():
     subparsers = parser.add_subparsers(dest='action')
 
     deploy_parser = subparsers.add_parser('deploy')
-    deploy_parser.add_argument("--jar", required=True)
+    deploy_parser.add_argument("--jar", required=True, type=check_jar)
     deploy_parser.add_argument("--flink-job-class", required=False, default=UPDATER_JOB_CLASS)
     deploy_parser.add_argument("--options-file", required=True, help='Path to the default options (yaml format)')
     deploy_parser.add_argument("--initial-state", required=False, help='Initial state')
 
     redeploy_parser = subparsers.add_parser('redeploy')
-    redeploy_parser.add_argument("--jar", required=True)
+    redeploy_parser.add_argument("--jar", required=True, type=check_jar)
     redeploy_parser.add_argument("--flink-job-class", required=False, default=UPDATER_JOB_CLASS)
     redeploy_parser.add_argument("--options-file", required=True, help='Path to the default options (yaml format)')
     redeploy_parser.add_argument("--savepoint", required=True)
@@ -447,7 +456,9 @@ def main():
             sys.exit("ERROR: Job with name %s already running with job id: %s" % (args.job_name, existing_job['jid']))
 
         options = conf.get_job_options(args.options_file)
-        initial_state = conf.build_object_store_path(args.initial_state)
+        initial_state = None
+        if args.initial_state is not None:
+            initial_state = conf.build_object_store_path(args.initial_state)
         jid = flink.schedule_job(jar_file=args.jar,
                                  entry_class=args.flink_job_class,
                                  save_point_path=initial_state,

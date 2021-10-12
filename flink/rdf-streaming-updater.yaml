@@ -8,10 +8,9 @@ parallelism: $PARALLELISM$
 output_topic_partition: $OUTPUT_TOPIC_PARTITION$
 http_routes: $HTTP_ROUTES$
 job_name: $JOB_NAME$
-side_outputs_domain: $SIDE_OUTPUT_DOMAIN$
+hostname: $HOSTNAME$
 
 use_versioned_serializers: true
-hostname: www.wikidata.org
 entity_namespaces: 0,120,146
 topic_prefixes: eqiad.,codfw.
 rev_create_topic: mediawiki.revision-create
