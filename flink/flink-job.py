@@ -152,6 +152,26 @@ JOBS = {
             'HOSTNAME': 'www.wikidata.org',
         },
     },
+    'WCQS Streaming Updater': {
+        'staging': {
+            'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater_test',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "commons/checkpoints"),
+            'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation-staging',
+            'HOSTNAME': 'test-commons.wikimedia.org'
+        },
+        'eqiad': {
+            'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "commons/checkpoints"),
+            'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation',
+            'HOSTNAME': 'commons.wikimedia.org'
+        },
+        'codfw': {
+            'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "commons/checkpoints"),
+            'OUTPUT_TOPIC': 'codfw.mediainfo-streaming-updater.mutation',
+            'HOSTNAME': 'commons.wikimedia.org'
+        }
+    },
 }
 
 
@@ -357,6 +377,8 @@ class JobConf:
             'www.wikidata.org=' + mediawiki_endpoint,
             'test.wikidata.org=' + mediawiki_endpoint,
             'meta.wikimedia.org=' + mediawiki_endpoint,
+            'commons.wikimedia.org=' + mediawiki_endpoint,
+            'test-commons.wikimedia.org=' + mediawiki_endpoint,
             'schema.wikimedia.org=' + schema_endpoint,
         ])
 
