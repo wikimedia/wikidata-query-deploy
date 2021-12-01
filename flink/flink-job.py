@@ -92,9 +92,9 @@ ENDPOINT_PER_ENV = {
 }
 
 OBJECT_STORAGE_BASE = {
-    'staging': 'swift://rdf-streaming-updater-staging.thanos-swift/wikidata',
-    'eqiad': 'swift://rdf-streaming-updater-eqiad.thanos-swift/wikidata',
-    'codfw': 'swift://rdf-streaming-updater-codfw.thanos-swift/wikidata'
+    'staging': 'swift://rdf-streaming-updater-staging.thanos-swift',
+    'eqiad': 'swift://rdf-streaming-updater-eqiad.thanos-swift',
+    'codfw': 'swift://rdf-streaming-updater-codfw.thanos-swift'
 }
 
 
@@ -108,10 +108,6 @@ OPTIONS_PER_ENV = {
         'KAFKA_BROKERS': lambda c: c.extract_kafka_brokers(kafka_cluster='main-eqiad'),
         'HTTP_ROUTES': lambda c: c.build_http_routes(),
         'KAFKA_DC': 'eqiad',
-        'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater_test',
-        'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "checkpoints"),
-        'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation-staging',
-        'HOSTNAME': 'test.wikidata.org',
         'PARALLELISM': 4,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
@@ -120,10 +116,6 @@ OPTIONS_PER_ENV = {
         'KAFKA_BROKERS': lambda c: c.extract_kafka_brokers(kafka_cluster='main-eqiad'),
         'HTTP_ROUTES': lambda c: c.build_http_routes(),
         'KAFKA_DC': 'eqiad',
-        'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
-        'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "checkpoints"),
-        'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation',
-        'HOSTNAME': 'www.wikidata.org',
         'PARALLELISM': 12,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
@@ -132,14 +124,34 @@ OPTIONS_PER_ENV = {
         'KAFKA_BROKERS': lambda c: c.extract_kafka_brokers(kafka_cluster='main-codfw'),
         'HTTP_ROUTES': lambda c: c.build_http_routes(),
         'KAFKA_DC': 'codfw',
-        'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
-        'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "checkpoints"),
-        'OUTPUT_TOPIC': 'codfw.rdf-streaming-updater.mutation',
-        'HOSTNAME': 'www.wikidata.org',
         'PARALLELISM': 12,
         'OUTPUT_TOPIC_PARTITION': 0,
         'JOB_NAME': lambda c: c.job_name
     }
+}
+
+# Per-job options that extend OPTIONS_PER_ENV
+JOBS = {
+    'WDQS Streaming Updater': {
+        'staging': {
+            'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater_test',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "wikidata/checkpoints"),
+            'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation-staging',
+            'HOSTNAME': 'test.wikidata.org',
+        },
+        'eqiad': {
+            'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "wikidata/checkpoints"),
+            'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation',
+            'HOSTNAME': 'www.wikidata.org',
+        },
+        'codfw': {
+            'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "wikidata/checkpoints"),
+            'OUTPUT_TOPIC': 'codfw.rdf-streaming-updater.mutation',
+            'HOSTNAME': 'www.wikidata.org',
+        },
+    },
 }
 
 
@@ -320,7 +332,8 @@ class JobConf:
         self.config = yaml.safe_load(open(file))
         if self.config is None:
             raise IOError("Cannot read %s" % file)
-        self.job_option_replacement = OPTIONS_PER_ENV[env]
+        self.job_option_replacement = dict(OPTIONS_PER_ENV[env])
+        self.job_option_replacement.update(JOBS[job_name][env])
         self.job_name = job_name
         self.object_store_base = OBJECT_STORAGE_BASE[env]
         self.logger = logging.getLogger("jobconf")
@@ -419,7 +432,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Flink job deployer')
     parser.add_argument("--debug", required=False, action="store_true")
-    parser.add_argument("--job-name", required=False, default='WDQS Streaming Updater')
+    parser.add_argument("--job-name", required=False, choices=JOBS.keys(), default='WDQS Streaming Updater')
     parser.add_argument("--env", required=True, choices=OPTIONS_PER_ENV.keys())
     subparsers = parser.add_subparsers(dest='action')
 
