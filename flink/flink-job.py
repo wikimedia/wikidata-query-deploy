@@ -340,8 +340,12 @@ class JobConf:
     def build_http_routes(self) -> str:
         schema_endpoint = self.get_service_proxy_url('schema')
         mediawiki_endpoint = self.get_service_proxy_url('mwapi-async')
-        return 'www.wikidata.org=%s,schema.wikimedia.org=%s,meta.wikimedia.org=%s' % (
-            mediawiki_endpoint, schema_endpoint, mediawiki_endpoint)
+        return ','.join([
+            'www.wikidata.org=' + mediawiki_endpoint,
+            'test.wikidata.org=' + mediawiki_endpoint,
+            'meta.wikimedia.org=' + mediawiki_endpoint,
+            'schema.wikimedia.org=' + schema_endpoint,
+        ])
 
     def get_job_options(self, option_yaml_file) -> dict:
         common_options = yaml.safe_load(open(option_yaml_file, 'r'))
