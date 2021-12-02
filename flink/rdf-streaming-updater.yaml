@@ -9,6 +9,9 @@ output_topic_partition: $OUTPUT_TOPIC_PARTITION$
 http_routes: $HTTP_ROUTES$
 job_name: $JOB_NAME$
 hostname: $HOSTNAME$
+uris_scheme: $URIS_SCHEME$
+wikidata_concept_uri: $WIKIDATA_CONCEPT_URI$
+commons_concept_uri: $COMMONS_CONCEPT_URI$
 
 use_versioned_serializers: true
 entity_namespaces: 0,120,146

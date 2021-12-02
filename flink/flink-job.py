@@ -138,18 +138,27 @@ JOBS = {
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "wikidata/checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation-staging',
             'HOSTNAME': 'test.wikidata.org',
+            'URIS_SCHEME': 'wikidata',
+            'WIKIDATA_CONCEPT_URI': 'http://test.wikidata.org',
+            'COMMONS_CONCEPT_URI': None,
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "wikidata/checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation',
             'HOSTNAME': 'www.wikidata.org',
+            'URIS_SCHEME': 'wikidata',
+            'WIKIDATA_CONCEPT_URI': None,
+            'COMMONS_CONCEPT_URI': None,
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "wikidata/checkpoints"),
             'OUTPUT_TOPIC': 'codfw.rdf-streaming-updater.mutation',
             'HOSTNAME': 'www.wikidata.org',
+            'URIS_SCHEME': 'wikidata',
+            'WIKIDATA_CONCEPT_URI': None,
+            'COMMONS_CONCEPT_URI': None,
         },
     },
     'WCQS Streaming Updater': {
@@ -157,19 +166,28 @@ JOBS = {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater_test',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "commons/checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation-staging',
-            'HOSTNAME': 'test-commons.wikimedia.org'
+            'HOSTNAME': 'test-commons.wikimedia.org',
+            'URIS_SCHEME': 'commons',
+            'WIKIDATA_CONCEPT_URI': 'http://test.wikidata.org',
+            'COMMONS_CONCEPT_URI': 'https://test-commons.wikidata.org',
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "commons/checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation',
-            'HOSTNAME': 'commons.wikimedia.org'
+            'HOSTNAME': 'commons.wikimedia.org',
+            'URIS_SCHEME': 'commons',
+            'WIKIDATA_CONCEPT_URI': None,
+            'COMMONS_CONCEPT_URI': None,
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "commons/checkpoints"),
             'OUTPUT_TOPIC': 'codfw.mediainfo-streaming-updater.mutation',
-            'HOSTNAME': 'commons.wikimedia.org'
+            'HOSTNAME': 'commons.wikimedia.org',
+            'URIS_SCHEME': 'commons',
+            'WIKIDATA_CONCEPT_URI': None,
+            'COMMONS_CONCEPT_URI': None,
         }
     },
 }
@@ -402,12 +420,15 @@ class JobConf:
                     raise ValueError("Missing replacement for %s" % var_name)
                 if callable(replacement):
                     replacement = replacement(self)
+                if replacement is None:
+                    # prefers application defaults
+                    return None
                 var_val = var_val[:m.start()] + str(replacement) + var_val[m.end():]
 
             return var_val
 
         # build a map --option_name: option_value
-        options = {('--' + k): replace(v) for k, v in common_options.items()}
+        options = {('--' + k): replace(v) for k, v in common_options.items() if v is not None}
         return options
 
     def build_object_store_path(self, savepoint: str) -> str:
