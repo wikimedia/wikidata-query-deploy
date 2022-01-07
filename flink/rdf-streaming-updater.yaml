@@ -12,9 +12,10 @@ hostname: $HOSTNAME$
 uris_scheme: $URIS_SCHEME$
 wikidata_concept_uri: $WIKIDATA_CONCEPT_URI$
 commons_concept_uri: $COMMONS_CONCEPT_URI$
+entity_namespaces: $ENTITY_NAMESPACES$
+mediainfo_entity_namespaces: $MEDIAINFO_ENTITY_NAMESPACES$
 
 use_versioned_serializers: true
-entity_namespaces: 0,120,146
 topic_prefixes: eqiad.,codfw.
 rev_create_topic: mediawiki.revision-create
 page_delete_topic: mediawiki.page-delete

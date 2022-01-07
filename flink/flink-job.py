@@ -130,9 +130,13 @@ OPTIONS_PER_ENV = {
     }
 }
 
-# Per-job options that extend OPTIONS_PER_ENV
+# Per-job options that extend OPTIONS_PER_ENV, split by env
 JOBS = {
     'WDQS Streaming Updater': {
+        'common': {
+            'ENTITY_NAMESPACES': '0,120,146',
+            'MEDIAINFO_ENTITY_NAMESPACES': None
+        },
         'staging': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater_test',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "wikidata/checkpoints"),
@@ -162,6 +166,10 @@ JOBS = {
         },
     },
     'WCQS Streaming Updater': {
+        'common': {
+            'ENTITY_NAMESPACES': None,
+            'MEDIAINFO_ENTITY_NAMESPACES': '6'
+        },
         'staging': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater_test',
             'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "commons/checkpoints"),
@@ -371,6 +379,7 @@ class JobConf:
         if self.config is None:
             raise IOError("Cannot read %s" % file)
         self.job_option_replacement = dict(OPTIONS_PER_ENV[env])
+        self.job_option_replacement.update(JOBS[job_name]['common'])
         self.job_option_replacement.update(JOBS[job_name][env])
         self.job_name = job_name
         self.object_store_base = OBJECT_STORAGE_BASE[env]
