@@ -437,7 +437,7 @@ class JobConf:
             return var_val
 
         # build a map --option_name: option_value
-        options = {('--' + k): replace(v) for k, v in common_options.items() if v is not None}
+        options = {('--' + k): replace(v) for k, v in common_options.items() if replace(v) is not None}
         return options
 
     def build_object_store_path(self, savepoint: str) -> str:
