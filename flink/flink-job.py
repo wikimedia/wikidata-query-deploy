@@ -75,6 +75,9 @@ import requests.packages.urllib3.util.connection as urllib3_cn
 import yaml
 from requests import Session
 
+WDQS_JOB_NAME = 'WDQS Streaming Updater'
+WCQS_JOB_NAME = 'WCQS Streaming Updater'
+
 UPDATER_JOB_CLASS = 'org.wikidata.query.rdf.updater.UpdaterJob'
 
 KAFKA_CLUSTER_FOR_STAGING = 'main-eqiad'
@@ -91,16 +94,26 @@ ENDPOINT_PER_ENV = {
     'codfw': 'https://kubernetes2003.codfw.wmnet:4007',  # there's no dedicated ns entry
 }
 
-OBJECT_STORAGE_BASE = {
-    'staging': 'swift://rdf-streaming-updater-staging.thanos-swift',
-    'eqiad': 'swift://rdf-streaming-updater-eqiad.thanos-swift',
-    'codfw': 'swift://rdf-streaming-updater-codfw.thanos-swift'
-}
-
 
 def join_path(base, rest):
     sep = "" if base.endswith("/") or rest.startswith("/") else "/"
     return base + sep + rest
+
+
+OBJECT_STORAGE_BASE = {
+    'staging': {
+        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-staging.thanos-swift', 'wikidata'),
+        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-staging.thanos-swift', 'commons'),
+    },
+    'eqiad': {
+        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-eqiad.thanos-swift', 'wikidata'),
+        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-eqiad.thanos-swift', 'commons'),
+    },
+    'codfw': {
+        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-codfw.thanos-swift', 'wikidata'),
+        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-codfw.thanos-swift', 'commons'),
+    }
+}
 
 
 OPTIONS_PER_ENV = {
@@ -132,14 +145,14 @@ OPTIONS_PER_ENV = {
 
 # Per-job options that extend OPTIONS_PER_ENV, split by env
 JOBS = {
-    'WDQS Streaming Updater': {
+    WDQS_JOB_NAME: {
         'common': {
             'ENTITY_NAMESPACES': '0,120,146',
             'MEDIAINFO_ENTITY_NAMESPACES': None
         },
         'staging': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater_test',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "wikidata/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'][WDQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation-staging',
             'HOSTNAME': 'test.wikidata.org',
             'URIS_SCHEME': 'wikidata',
@@ -148,7 +161,7 @@ JOBS = {
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "wikidata/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'][WDQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.rdf-streaming-updater.mutation',
             'HOSTNAME': 'www.wikidata.org',
             'URIS_SCHEME': 'wikidata',
@@ -157,7 +170,7 @@ JOBS = {
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "wikidata/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'][WDQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'codfw.rdf-streaming-updater.mutation',
             'HOSTNAME': 'www.wikidata.org',
             'URIS_SCHEME': 'wikidata',
@@ -165,14 +178,14 @@ JOBS = {
             'COMMONS_CONCEPT_URI': None,
         },
     },
-    'WCQS Streaming Updater': {
+    WCQS_JOB_NAME: {
         'common': {
             'ENTITY_NAMESPACES': None,
             'MEDIAINFO_ENTITY_NAMESPACES': '6'
         },
         'staging': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater_test',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'], "commons/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['staging'][WCQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation-staging',
             'HOSTNAME': 'test-commons.wikimedia.org',
             'URIS_SCHEME': 'commons',
@@ -181,7 +194,7 @@ JOBS = {
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'], "commons/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['eqiad'][WCQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'eqiad.mediainfo-streaming-updater.mutation',
             'HOSTNAME': 'commons.wikimedia.org',
             'URIS_SCHEME': 'commons',
@@ -190,7 +203,7 @@ JOBS = {
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
-            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'], "commons/checkpoints"),
+            'CHECKPOINT_DIR': join_path(OBJECT_STORAGE_BASE['codfw'][WCQS_JOB_NAME], "checkpoints"),
             'OUTPUT_TOPIC': 'codfw.mediainfo-streaming-updater.mutation',
             'HOSTNAME': 'commons.wikimedia.org',
             'URIS_SCHEME': 'commons',
@@ -382,7 +395,7 @@ class JobConf:
         self.job_option_replacement.update(JOBS[job_name]['common'])
         self.job_option_replacement.update(JOBS[job_name][env])
         self.job_name = job_name
-        self.object_store_base = OBJECT_STORAGE_BASE[env]
+        self.object_store_base = OBJECT_STORAGE_BASE[env][job_name]
         self.logger = logging.getLogger("jobconf")
 
     def get_service_proxy_url(self, service: str) -> str:
@@ -484,7 +497,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Flink job deployer')
     parser.add_argument("--debug", required=False, action="store_true")
-    parser.add_argument("--job-name", required=False, choices=JOBS.keys(), default='WDQS Streaming Updater')
+    parser.add_argument("--job-name", required=True, choices=JOBS.keys())
     parser.add_argument("--env", required=True, choices=OPTIONS_PER_ENV.keys())
     subparsers = parser.add_subparsers(dest='action')
 
