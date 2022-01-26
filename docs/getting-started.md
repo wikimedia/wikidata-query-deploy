@@ -3,7 +3,7 @@
 ## Clone the project
 
 ```
-$ git clone  --recurse-submodules https://gerrit.wikimedia.org/r/wikidata/query/rdf wikidata-query-rdf
+$ git clone https://gerrit.wikimedia.org/r/wikidata/query/rdf wikidata-query-rdf
 ```
 
 ## Build it
@@ -13,15 +13,15 @@ $ cd wikidata-query-rdf
 $ mvn package
 ```
 
-The distributable package can be found in *./dist/target/service-VERSION-dist.zip*:
+The distributable package can be found in *./dist/target/service-VERSION-dist.tar.gz*:
 
 ```
 $ cd dist/target
-$ unzip service-*-dist.zip
+$ tar xf service-*-dist.tar.gz
 $ cd service-*/
 ```
 
-Unzipping the package, we find a customized Blazegraph, Jetty launcher, launch scripts, and configuration:
+Extracting the package, we find a customized Blazegraph, Jetty launcher, launch scripts, and configuration:
 
 ```
 .
