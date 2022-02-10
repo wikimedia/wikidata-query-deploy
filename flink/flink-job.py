@@ -143,6 +143,10 @@ OPTIONS_PER_ENV = {
     }
 }
 
+WDQS_RECONCILE_PREFIX='wdqs_sideoutputs_reconcile'
+WCQS_RECONCILE_PREFIX='wcqs_sideoutputs_reconcile'
+RECONCILE_TOPIC='rdf-streaming-updater.reconcile'
+
 # Per-job options that extend OPTIONS_PER_ENV, split by env
 JOBS = {
     WDQS_JOB_NAME: {
@@ -158,6 +162,9 @@ JOBS = {
             'URIS_SCHEME': 'wikidata',
             'WIKIDATA_CONCEPT_URI': 'http://test.wikidata.org',
             'COMMONS_CONCEPT_URI': None,
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WDQS_RECONCILE_PREFIX,
+                                                                 dc='eqiad')
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
@@ -167,6 +174,9 @@ JOBS = {
             'URIS_SCHEME': 'wikidata',
             'WIKIDATA_CONCEPT_URI': None,
             'COMMONS_CONCEPT_URI': None,
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WDQS_RECONCILE_PREFIX,
+                                                                 dc='eqiad')
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wdqs_streaming_updater',
@@ -176,6 +186,9 @@ JOBS = {
             'URIS_SCHEME': 'wikidata',
             'WIKIDATA_CONCEPT_URI': None,
             'COMMONS_CONCEPT_URI': None,
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WDQS_RECONCILE_PREFIX,
+                                                                 dc='codfw')
         },
     },
     WCQS_JOB_NAME: {
@@ -191,6 +204,9 @@ JOBS = {
             'URIS_SCHEME': 'commons',
             'WIKIDATA_CONCEPT_URI': 'http://test.wikidata.org',
             'COMMONS_CONCEPT_URI': 'https://test-commons.wikidata.org',
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WCQS_RECONCILE_PREFIX,
+                                                                 dc='eqiad')
         },
         'eqiad': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
@@ -200,6 +216,9 @@ JOBS = {
             'URIS_SCHEME': 'commons',
             'WIKIDATA_CONCEPT_URI': None,
             'COMMONS_CONCEPT_URI': None,
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WCQS_RECONCILE_PREFIX,
+                                                                 dc='eqiad')
         },
         'codfw': {
             'KAFKA_CONSUMER_GROUP': 'wcqs_streaming_updater',
@@ -209,6 +228,9 @@ JOBS = {
             'URIS_SCHEME': 'commons',
             'WIKIDATA_CONCEPT_URI': None,
             'COMMONS_CONCEPT_URI': None,
+            'RECONCILIATION_TOPIC': '{topic}[{tag}@{dc}]'.format(topic=RECONCILE_TOPIC,
+                                                                 tag=WCQS_RECONCILE_PREFIX,
+                                                                 dc='codfw')
         }
     },
 }

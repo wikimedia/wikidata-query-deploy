@@ -14,6 +14,7 @@ wikidata_concept_uri: $WIKIDATA_CONCEPT_URI$
 commons_concept_uri: $COMMONS_CONCEPT_URI$
 entity_namespaces: $ENTITY_NAMESPACES$
 mediainfo_entity_namespaces: $MEDIAINFO_ENTITY_NAMESPACES$
+reconciliation_topic: $RECONCILIATION_TOPIC$
 
 use_versioned_serializers: true
 topic_prefixes: eqiad.,codfw.
