@@ -15,6 +15,7 @@ commons_concept_uri: $COMMONS_CONCEPT_URI$
 entity_namespaces: $ENTITY_NAMESPACES$
 mediainfo_entity_namespaces: $MEDIAINFO_ENTITY_NAMESPACES$
 reconciliation_topic: $RECONCILIATION_TOPIC$
+acceptable_mediawiki_lag: $MW_ACCEPTABLE_LAG$
 
 use_versioned_serializers: true
 topic_prefixes: eqiad.,codfw.

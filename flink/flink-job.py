@@ -151,6 +151,7 @@ RECONCILE_TOPIC='rdf-streaming-updater.reconcile'
 JOBS = {
     WDQS_JOB_NAME: {
         'common': {
+            'MW_ACCEPTABLE_LAG': 10,
             'ENTITY_NAMESPACES': '0,120,146',
             'MEDIAINFO_ENTITY_NAMESPACES': None
         },
@@ -193,6 +194,7 @@ JOBS = {
     },
     WCQS_JOB_NAME: {
         'common': {
+            'MW_ACCEPTABLE_LAG': 15,
             'ENTITY_NAMESPACES': None,
             'MEDIAINFO_ENTITY_NAMESPACES': '6'
         },
