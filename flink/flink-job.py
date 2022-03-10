@@ -20,7 +20,7 @@
 #
 # Note on path, the options requiring a path to the object store can be given a relative path, e.g. specifying
 # "savepoints" for staging will prepend the corresponding entry in the OBJECT_STORAGE_BASE array. A full path can
-# be given (starting with scheme:// e.g. swift://).
+# be given (starting with scheme:// e.g. s3://).
 #
 # Example usage:
 # Deploying the version 0.3.77 of the job using the name "WDQS Streaming Updater" in eqiad starting from
@@ -102,16 +102,16 @@ def join_path(base, rest):
 
 OBJECT_STORAGE_BASE = {
     'staging': {
-        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-staging.thanos-swift', 'wikidata'),
-        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-staging.thanos-swift', 'commons'),
+        WDQS_JOB_NAME: join_path('s3://rdf-streaming-updater-staging', 'wikidata'),
+        WCQS_JOB_NAME: join_path('s3://rdf-streaming-updater-staging', 'commons'),
     },
     'eqiad': {
-        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-eqiad.thanos-swift', 'wikidata'),
-        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-eqiad.thanos-swift', 'commons'),
+        WDQS_JOB_NAME: join_path('s3://rdf-streaming-updater-eqiad', 'wikidata'),
+        WCQS_JOB_NAME: join_path('s3://rdf-streaming-updater-eqiad', 'commons'),
     },
     'codfw': {
-        WDQS_JOB_NAME: join_path('swift://rdf-streaming-updater-codfw.thanos-swift', 'wikidata'),
-        WCQS_JOB_NAME: join_path('swift://rdf-streaming-updater-codfw.thanos-swift', 'commons'),
+        WDQS_JOB_NAME: join_path('s3://rdf-streaming-updater-codfw', 'wikidata'),
+        WCQS_JOB_NAME: join_path('s3://rdf-streaming-updater-codfw', 'commons'),
     }
 }
 
