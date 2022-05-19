@@ -97,6 +97,7 @@ done
 
 pushd $DIR
 
+JETTY_RUNNER=${JETTY_RUNNER:-$(echo jetty-runner*.jar)}
 # Q-id of the default globe
 DEFAULT_GLOBE=${DEFAULT_GLOBE:-"2"}
 # Blazegraph HTTP User Agent for federation
@@ -140,7 +141,8 @@ exec java \
      $OAUTH_BANNED_USERNAMES_PATH_PARAM \
      -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF \
      ${BLAZEGRAPH_OPTS} \
-     -jar jetty-runner*.jar \
+     -cp "$JETTY_RUNNER:lib/logging/*" \
+     org.eclipse.jetty.runner.Runner \
      --host $HOST \
      --port $PORT \
      --path /$CONTEXT \
