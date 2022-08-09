@@ -90,8 +90,8 @@ END_JOB_STATUS = ['FAILED', 'CANCELED', 'FINISHED']
 
 ENDPOINT_PER_ENV = {
     'staging': 'https://staging.svc.eqiad.wmnet:4007',
-    'eqiad': 'https://kubernetes1003.eqiad.wmnet:4007',  # there's no dedicated ns entry
-    'codfw': 'https://kubernetes2003.codfw.wmnet:4007',  # there's no dedicated ns entry
+    'eqiad': 'https://kubernetes1008.eqiad.wmnet:4007',  # there's no dedicated ns entry
+    'codfw': 'https://kubernetes2007.codfw.wmnet:4007',  # there's no dedicated ns entry
 }
 
 
