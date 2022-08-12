@@ -33,6 +33,7 @@ http://id.nlm.nih.gov/mesh/sparql
 http://collection.britishmuseum.org/sparql
 http://lod.opentransportdata.swiss/query
 http://data.bibliotheken.nl/sparql
+
 https://bag.basisregistraties.overheid.nl/sparql
 https://brt.basisregistraties.overheid.nl/sparql
 http://collection.britishart.yale.edu/openrdf-sesame/repositories/ycba
@@ -73,3 +74,4 @@ https://lingualibre.org/sparql
 http://publications.europa.eu/webapi/rdf/sparql
 https://linked.ec-dataplatform.eu/sparql
 https://test-linked.ec-dataplatform.eu/sparql
+https://sweopendata.wikibase.cloud/query
