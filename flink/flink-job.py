@@ -530,6 +530,9 @@ def main():
     deploy_parser.add_argument("--flink-job-class", required=False, default=UPDATER_JOB_CLASS)
     deploy_parser.add_argument("--options-file", required=True, help='Path to the default options (yaml format)')
     deploy_parser.add_argument("--initial-state", required=False, help='Initial state')
+    deploy_parser.add_argument("--ignore-failures-after-transaction-timeout", required=False,
+                               help='DANGEROUS, workaround to resume from an old savepoint',
+                               action="store_true")
 
     redeploy_parser = subparsers.add_parser('redeploy')
     redeploy_parser.add_argument("--jar", required=True, type=check_jar)
@@ -562,6 +565,8 @@ def main():
             sys.exit("ERROR: Job with name %s already running with job id: %s" % (args.job_name, existing_job['jid']))
 
         options = conf.get_job_options(args.options_file)
+        if args.ignore_failures_after_transaction_timeout:
+            options["--ignore_failures_after_transaction_timeout"] = "true"
         initial_state = None
         if args.initial_state is not None:
             initial_state = conf.build_object_store_path(args.initial_state)
