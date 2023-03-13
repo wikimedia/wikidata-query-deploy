@@ -75,3 +75,4 @@ https://linked.ec-dataplatform.eu/sparql
 https://test-linked.ec-dataplatform.eu/sparql
 https://sweopendata.wikibase.cloud/query/sparql
 https://query.linkedopendata.eu/sparql
+https://data.europa.eu/sparql
