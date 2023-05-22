@@ -77,3 +77,6 @@ https://sweopendata.wikibase.cloud/query/sparql
 https://query.linkedopendata.eu/sparql
 https://data.europa.eu/sparql
 https://opendata.aragon.es/sparql
+https://vocabularies.unesco.org/sparql
+https://digitale.bncf.firenze.sbn.it/openrdf-workbench/repositories/NS/query
+https://lila-erc.eu/sparql/lila_knowledge_base/sparql
