@@ -20,7 +20,7 @@ git diff --cached --exit-code --quiet
 
 echo "remove all files except dotfiles, this script, README, scap directory and files required for deployment"
 shopt -s extglob
-rm -rv !(.git*|scap|flink|deploy-prepare.sh|README|agents.txt|patterns.txt|RWStore.categories.properties|whitelist.txt)
+rm -rv !(.git*|scap|flink|deploy-prepare.sh|README|agents.txt|patterns.txt|RWStore.categories.properties|allowlist.txt|whitelist.txt)
 shopt -u extglob
 
 echo "downloading latest tar file"
