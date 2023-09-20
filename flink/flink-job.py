@@ -358,6 +358,12 @@ class Flink:
         trigger_id = resp.json()['request-id']
         return self.wait_for_savepoint(job_id, trigger_id)
 
+    def cancel(self, job_id: str):
+        path = "/jobs/%s" % job_id
+        self.logger.debug("XXX: Canceling job with PATH: %s", path)
+        resp = self.session.patch(path)
+        resp.raise_for_status()
+
     def trigger_savepoint(self, job_name: str, savepoint_path: str) -> str:
         job_id = self.job_id_by_name(job_name)
         if job_id is None:
@@ -546,6 +552,11 @@ def main():
     stop_parser = subparsers.add_parser('stop')
     stop_parser.add_argument("--savepoint", required=True)
 
+    # risky procedure but required as a workaround for https://issues.apache.org/jira/browse/FLINK-28758
+    save_and_cancel = subparsers.add_parser('save_and_cancel')
+    save_and_cancel.add_argument("--savepoint", required=True)
+    save_and_cancel.add_argument("--job-id", required=True)
+
     subparsers.add_parser('status')
 
     args = parser.parse_args()
@@ -606,6 +617,18 @@ def main():
                                  save_point_path=savepoint_path,
                                  job_options=options)
         logger.info("Job %s redeployed with id %s" % (jname, jid))
+    elif args.action == 'save_and_cancel':
+        logger.debug("Saving and cancelling job %s", jname)
+        job_id = flink.job_id_by_name(jname)
+        if job_id is None:
+            raise "Job %s is not running" % jname
+        if job_id != args.job_id:
+            raise "Job %s is not running with id %s" % (jname, args.job_id)
+        logger.debug("Saving job %s", jname)
+        savepoint_base = conf.build_object_store_path(savepoint=args.savepoint)
+        savepoint_path = flink.trigger_savepoint(job_name=jname, savepoint_path=savepoint_base)
+        logger.info("Job %s saved at %s", jname, savepoint_path)
+        flink.cancel(job_id)
 
 
 if __name__ == "__main__":
