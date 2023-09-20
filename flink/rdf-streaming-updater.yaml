@@ -17,7 +17,6 @@ mediainfo_entity_namespaces: $MEDIAINFO_ENTITY_NAMESPACES$
 reconciliation_topic: $RECONCILIATION_TOPIC$
 acceptable_mediawiki_lag: $MW_ACCEPTABLE_LAG$
 
-use_versioned_serializers: true
 topic_prefixes: eqiad.,codfw.
 rev_create_topic: mediawiki.revision-create
 page_delete_topic: mediawiki.page-delete
@@ -30,6 +29,7 @@ wikibase_repo_thread_pool_size: 30
 input_idleness: 60000
 checkpoint_interval: 30000
 checkpoint_timeout: 900000
+use_new_flink_kafka_api: true
 
 ##
 # configure the failure rate restart strategy
