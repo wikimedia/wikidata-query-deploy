@@ -310,11 +310,12 @@ class Flink:
     def schedule_job(self, jar_file: str,
                      entry_class: str,
                      job_options: dict,
-                     save_point_path: Optional[str] = None) -> str:
+                     save_point_path: Optional[str] = None,
+                     allow_non_restored_state: bool = False) -> str:
         jar_id = self.upload_jar(jar_file)
         job_args = {
             'entryClass': entry_class,
-            'allowNonRestoredState': False
+            'allowNonRestoredState': allow_non_restored_state
         }
         if save_point_path is not None:
             job_args['savepointPath'] = save_point_path
@@ -324,6 +325,8 @@ class Flink:
             job_args['programArgsList'] = [k_or_v for k_and_v in job_options.items() for k_or_v in k_and_v]
 
         job_args_as_json = json.dumps(job_args)
+        if allow_non_restored_state:
+            self.logger.warning("Starting job with --allow-non-restored-state true")
         self.logger.debug("Starting job with arguments: %s", job_args_as_json)
         resp = self.session.post('jars/%s/run' % jar_id, data=job_args_as_json)
         resp.raise_for_status()
@@ -539,12 +542,18 @@ def main():
     deploy_parser.add_argument("--ignore-failures-after-transaction-timeout", required=False,
                                help='DANGEROUS, workaround to resume from an old savepoint',
                                action="store_true")
+    deploy_parser.add_argument("--allow-non-restored-state", required=False,
+                                 help='DANGEROUS, useful only when structural changes are made to the app',
+                                 action='store_true')
 
     redeploy_parser = subparsers.add_parser('redeploy')
     redeploy_parser.add_argument("--jar", required=True, type=check_jar)
     redeploy_parser.add_argument("--flink-job-class", required=False, default=UPDATER_JOB_CLASS)
     redeploy_parser.add_argument("--options-file", required=True, help='Path to the default options (yaml format)')
     redeploy_parser.add_argument("--savepoint", required=True)
+    redeploy_parser.add_argument("--allow-non-restored-state", required=False,
+                                 help='DANGEROUS, useful only when structural changes are made to the app',
+                                 action='store_true')
 
     save_parser = subparsers.add_parser('save')
     save_parser.add_argument("--savepoint", required=True)
@@ -583,8 +592,9 @@ def main():
             initial_state = conf.build_object_store_path(args.initial_state)
         jid = flink.schedule_job(jar_file=args.jar,
                                  entry_class=args.flink_job_class,
+                                 job_options=options,
                                  save_point_path=initial_state,
-                                 job_options=options)
+                                 allow_non_restored_state=args.allow_non_restored_state)
         logger.info("Job %s deployed with id %s" % (jname, jid))
     elif args.action == 'save':
         logger.debug("Saving job %s", jname)
@@ -614,8 +624,9 @@ def main():
         logger.info("Job %s saved at %s", jname, savepoint_path)
         jid = flink.schedule_job(jar_file=args.jar,
                                  entry_class=args.flink_job_class,
+                                 job_options=options,
                                  save_point_path=savepoint_path,
-                                 job_options=options)
+                                 allow_non_restored_state=args.allow_non_restored_state)
         logger.info("Job %s redeployed with id %s" % (jname, jid))
     elif args.action == 'save_and_cancel':
         logger.debug("Saving and cancelling job %s", jname)
