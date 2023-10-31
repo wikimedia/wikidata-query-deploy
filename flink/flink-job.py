@@ -455,7 +455,7 @@ class JobConf:
             'schema.wikimedia.org=' + schema_endpoint,
         ])
 
-    def get_job_options(self, option_yaml_file) -> dict:
+    def get_job_options(self, option_yaml_file, prefix='--') -> dict:
         common_options = yaml.safe_load(open(option_yaml_file, 'r'))
 
         def replace(v):
@@ -483,7 +483,7 @@ class JobConf:
             return var_val
 
         # build a map --option_name: option_value
-        options = {('--' + k): replace(v) for k, v in common_options.items() if replace(v) is not None}
+        options = {(prefix + k): replace(v) for k, v in common_options.items() if replace(v) is not None}
         return options
 
     def build_object_store_path(self, savepoint: str) -> str:
@@ -568,6 +568,9 @@ def main():
 
     subparsers.add_parser('status')
 
+    dump_config = subparsers.add_parser('dump_config')
+    dump_config.add_argument("--options-file", required=True, help='Path to the default options (yaml format)')
+
     args = parser.parse_args()
 
     if args.debug:
@@ -640,6 +643,9 @@ def main():
         savepoint_path = flink.trigger_savepoint(job_name=jname, savepoint_path=savepoint_base)
         logger.info("Job %s saved at %s", jname, savepoint_path)
         flink.cancel(job_id)
+    elif args.action == 'dump_config':
+        options = conf.get_job_options(args.options_file, prefix='')
+        print(json.dumps(options))
 
 
 if __name__ == "__main__":
