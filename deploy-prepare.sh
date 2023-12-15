@@ -20,7 +20,7 @@ git diff --cached --exit-code --quiet
 
 echo "remove all files except dotfiles, this script, README, scap directory and files required for deployment"
 shopt -s extglob
-rm -rv !(.git*|scap|flink|deploy-prepare.sh|README|agents.txt|patterns.txt|RWStore.categories.properties)
+rm -rv !(.git*|scap|deploy-prepare.sh|README|agents.txt|patterns.txt|RWStore.categories.properties)
 shopt -u extglob
 
 echo "downloading latest tar file"
@@ -30,8 +30,9 @@ curl -o service-${CURRENT_VERSION_NUMBER}-dist.tar.gz --fail \
 echo "extracting into current directory"
 tar --strip-components=1 -xvf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 
-echo "removing tar file"
+echo "removing tar file and some jars"
 rm -rf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
+rm -rf lib/streaming-updater-producer-${CURRENT_VERSION_NUMBER}-jar-with-dependencies.jar
 
 echo "creating commit"
 git add .
