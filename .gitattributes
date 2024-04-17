@@ -1,2 +1,2 @@
-*.jar filter=fat -text
-*.war filter=fat -text
+*.jar filter=lfs -text
+*.war filter=lfs -text
