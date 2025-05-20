@@ -25,7 +25,7 @@ shopt -u extglob
 
 echo "downloading latest tar file"
 curl -o service-${CURRENT_VERSION_NUMBER}-dist.tar.gz --fail \
- https://archiva.wikimedia.org/repository/releases/org/wikidata/query/rdf/service/${CURRENT_VERSION_NUMBER}/service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
+ https://gitlab.wikimedia.org/api/v4/groups/186/-/packages/maven/org/wikidata/query/rdf/service/${CURRENT_VERSION_NUMBER}/service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
 
 echo "extracting into current directory"
 tar --strip-components=1 -xvf service-${CURRENT_VERSION_NUMBER}-dist.tar.gz
